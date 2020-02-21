@@ -26,7 +26,18 @@ def read_waveform_data(filename):
             line = f.readline()
         
         return res_x, res_y
-
+      
+def find_distance(res_x, res_y):
+   first_index = -1
+   second_index = -1
+   threshold = -1.555
+   for i in range(len(res_y)):
+      if res_y[i] > threshold and first_index == -1:
+         first_index = i
+      else if res_y[i] > threshold and first_index != -1:
+         second_index = i
+   return res_x[second_index] - res_x[first_index]
+         
 def basic_plot(data_x, data_y):
     plt.figure(figsize=(30,20))
     plt.plot(data_x, data_y)
@@ -36,5 +47,6 @@ def basic_plot(data_x, data_y):
 
 if __name__ == '__main__':
     data_x, data_y = read_waveform_data("trial1/C1nov15pr00000.txt")
+    print(find_distance(data_x, data_y))
     basic_plot(data_x, data_y)
     

@@ -2,6 +2,7 @@
    Stanley Yu, sy2751
 """
 from tqdm import tqdm
+import csv
 import matplotlib.pyplot as plt
 import os
 import sys
@@ -81,7 +82,7 @@ def plot_lifetime(data_path):
     plt.ylabel('Count')
     plt.show()
 
-    return avg(lifetimes)
+    return lifetimes
 
 if __name__ == '__main__':
     # Verify that waveform analysis works.
@@ -89,5 +90,9 @@ if __name__ == '__main__':
     find_distance(data_x, data_y)
     waveform_plot(data_x, data_y)
     
-    avg = plot_lifetime("data/")
-    print(f"Average Muon Lifetime (microsec): {avg}")
+    lf = plot_lifetime("data/")
+    print(f"Average Muon Lifetime (microsec): {avg(lf)}")
+
+    with open('result.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([str(x) for x in lf])

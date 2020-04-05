@@ -14,6 +14,10 @@ import sys
 THRESHOLD = -1.555
 N_BINS = 10
 
+font = {'font.weight' : 'bold',
+        'font.size'   : 24}
+plt.rcParams.update(font)
+
 def perror(msg):
     print(msg, file=sys.stderr)
     sys.exit()
@@ -81,7 +85,7 @@ def plot_lifetime(data_path):
         lifetimes.append(1e6 * find_distance(res_x, res_y))
 
     fig, ax = plt.subplots(figsize=(15,10))
-    counts, bins, _ = ax.hist(lifetimes, bins=N_BINS)
+    counts, bins, _ = ax.hist(lifetimes, bins=N_BINS, density=True)
     x_bins = [(bins[i + 1] + bins[i]) / 2.0 for i in range(len(bins) - 1)]
     ax.scatter(x_bins, counts, c='k')
 
@@ -100,16 +104,16 @@ def plot_lifetime(data_path):
 
     textstr = '\n'.join((
         "Model: a * exp(-b * x) + c",
-        r'$a=%.3f$' % (popt[0], ),
-        r'$b=%.3f$' % (popt[1], ),
-        r'$c=%.3f$' % (popt[2], )))
+        r'$a=%.4f$' % (popt[0], ),
+        r'$b=%.4f$' % (popt[1], ),
+        r'$c=%.4f$' % (popt[2], )))
     props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-    ax.text(0.75, 0.95, textstr, transform=ax.transAxes, fontsize=14,   
+    ax.text(0.5, 0.95, textstr, transform=ax.transAxes, fontsize=24,   
         verticalalignment='top', bbox=props)
 
     ax.set_title('Muon Lifetime Distribution')
     ax.set_xlabel('Lifetime (microsec)')
-    ax.set_ylabel('Count')
+    ax.set_ylabel('Frequency')
     fig.tight_layout()
     plt.show()
 

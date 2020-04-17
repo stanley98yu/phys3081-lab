@@ -4,5 +4,4 @@ venv/
 # VSCode
 .vscode/
 
-report/
-result.csv
+*/result.csv
